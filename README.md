@@ -1,1 +1,1 @@
-# foodwassteoptimization
+# food waste optimization
