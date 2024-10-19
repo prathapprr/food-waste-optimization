@@ -5,4 +5,4 @@ matplotlib
 seaborn
 altair
 openai
-sklearn
+#sklearn
