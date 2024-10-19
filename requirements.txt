@@ -1,4 +1,7 @@
 streamlit
 pandas
+pickle5  # If using Python < 3.8; otherwise, no need to include pickle
 matplotlib
 seaborn
+altair
+openai
