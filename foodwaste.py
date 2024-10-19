@@ -310,3 +310,21 @@ if question:
     )
     st.write(f"Assistant: {response.choices[0].text.strip()}")
 
+
+
+
+
+
+#----------------------------------------------------------------------------
+import pickle
+import os
+
+model_path = "path_to_your_model_file.pkl"
+
+if os.path.exists(model_path):
+    with open(model_path, 'rb') as model_file:
+        model = pickle.load(model_file)
+else:
+    raise FileNotFoundError(f"The model file '{model_path}' was not found.")
+
+
