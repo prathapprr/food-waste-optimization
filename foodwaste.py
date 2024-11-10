@@ -4,6 +4,7 @@ import pickle
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
+import requests  # For making API requests to Gemini
 
 # Add custom background color styling using CSS for a professional color scheme
 page_bg_color = '''
@@ -133,11 +134,6 @@ else:
 
             # Display the result in a success message
             st.success(f"Estimated Food Wastage: {prediction[0]:.2f} units 🍛")
-            
-            # Show a progress bar for a better visual experience
-            progress_bar = st.progress(0)
-            for i in range(100):
-                progress_bar.progress(i + 1)
 
             # Feature importance plot
             st.subheader("🔍 Feature Importance Visualization")
@@ -164,9 +160,8 @@ st.sidebar.markdown("""
 📧 Contact: [email@example.com](mailto:email@example.com)
 🌐 Website: [www.restaurantoptimizer.com](http://www.restaurantoptimizer.com)
 """)
-import altair as alt
 
-# Section for interactive data exploration
+# Interactive Data Exploration Section
 st.subheader("📈 Interactive Data Exploration")
 
 # Dropdown to select a specific feature for filtering
@@ -188,7 +183,8 @@ else:
 st.write(f"Showing data filtered by {selected_feature}:")
 st.dataframe(filtered_data)
 
-# Create an interactive chart using Altair
+# Interactive chart using Altair
+import altair as alt
 chart = alt.Chart(filtered_data).mark_bar().encode(
     x=alt.X('Type of Food', title='Food Type'),
     y=alt.Y('Quantity of Food', title='Quantity'),
@@ -196,16 +192,10 @@ chart = alt.Chart(filtered_data).mark_bar().encode(
 ).interactive()
 
 st.altair_chart(chart)
-#------------------------------------------------------------------------
-import io
-import pandas as pd
-import streamlit as st
-
-# Sample filtered_data DataFrame for demonstration
-# Remove this line in your actual code
-filtered_data = pd.DataFrame({'Column1': [1, 2], 'Column2': [3, 4]})
 
 # Download predictions as a CSV or Excel file
+import io
+
 st.subheader("📂 Download Your Predictions")
 
 if 'prediction' in locals():
@@ -236,15 +226,11 @@ if 'prediction' in locals():
             mime='application/vnd.ms-excel',
         )
 
-    
-#---------------------------------------------------------------------
-import streamlit as st
-
-# Dark/Light Mode Toggle
+# --------------------------------------
+# Theme toggle (Dark/Light Mode)
 st.sidebar.subheader("🎨 Change Theme")
-# Set default theme to 'Dark Mode'
 theme = st.sidebar.radio(
-    "Choose Theme", ['Light Mode', 'Dark Mode'], index=1  # Set index=1 for Dark Mode
+    "Choose Theme", ['Light Mode', 'Dark Mode'], index=1
 )
 
 if theme == 'Dark Mode':
@@ -275,38 +261,26 @@ else:
 # Apply the CSS styles for theme toggle
 st.markdown(page_bg_color, unsafe_allow_html=True)
 
-# Your Streamlit app content goes here
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#-----------------------------------------------
-import openai
-
-# Set up OpenAI API key (ensure you handle this securely in real apps)
-openai.api_key = "your-api-key"
-
-# Input area for chatbot interaction
+# --------------------------------------
+# Chatbot with Gemini API
 st.subheader("🤖 Ask Our AI Assistant")
+
+# Direct assignment of the Gemini API key (Method 3)
+GEMINI_API_KEY = "api key"
+
 question = st.text_input("Ask a question about the tool or food wastage:")
 
 if question:
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=question,
-        max_tokens=150
+    response = requests.post(
+        "https://api.gemini.google.com/v1/completions",  # Example endpoint, check Gemini docs
+        headers={"Authorization": f"Bearer {GEMINI_API_KEY}"},
+        json={
+            "prompt": question,
+            "max_tokens": 150,
+        }
     )
-    st.write(f"Assistant: {response.choices[0].text.strip()}")
-
+    if response.status_code == 200:
+        assistant_answer = response.json()['choices'][0]['text']
+        st.write(f"Assistant: {assistant_answer}")
+    else:
+        st.error(f"Error: {response.text}")
