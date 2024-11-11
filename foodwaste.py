@@ -288,5 +288,3 @@ st.markdown("""
 #### 🌱 Let's Connect:
 Feel free to reach out to me for collaboration opportunities, ideas, or just a casual conversation about AI and technology.
 """, unsafe_allow_html=True)
-
-
