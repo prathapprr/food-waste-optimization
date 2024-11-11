@@ -4,7 +4,8 @@ import pickle
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
-import requests  # For making API requests to Gemini
+import requests
+from PIL import Image# For making API requests to Gemini
 
 # Add custom background color styling using CSS for a professional color scheme
 page_bg_color = '''
@@ -157,8 +158,9 @@ If you have any questions or issues with the prediction tool, feel free to conta
 
 st.sidebar.markdown("""
 ---
-📧 Contact: [email@example.com](mailto:email@example.com)
-🌐 Website: [www.restaurantoptimizer.com](http://www.restaurantoptimizer.com)
+📧 Contact: [prathapy150@gmail.com](mailto:prathapy150@gmail.com)
+
+🌐 Website: [www.restaurantoptimizer.com](https://food-waste-optimization.onrender.com/)
 """)
 
 # Interactive Data Exploration Section
@@ -261,26 +263,30 @@ else:
 # Apply the CSS styles for theme toggle
 st.markdown(page_bg_color, unsafe_allow_html=True)
 
-# --------------------------------------
-# Chatbot with Gemini API
-st.subheader("🤖 Ask Our AI Assistant")
 
-# Direct assignment of the Gemini API key (Method 3)
-GEMINI_API_KEY = "api key"
+st.markdown(""" Developer Info""")
+# Path to your local image
+image_path = "prathaphc1.png"  # Update with your local image path
 
-question = st.text_input("Ask a question about the tool or food wastage:")
+# Load and display the image
+img = Image.open(image_path)
+st.image(img, width=200)  # Adjust the width as needed
 
-if question:
-    response = requests.post(
-        "https://api.gemini.google.com/v1/completions",  # Example endpoint, check Gemini docs
-        headers={"Authorization": f"Bearer {GEMINI_API_KEY}"},
-        json={
-            "prompt": question,
-            "max_tokens": 150,
-        }
-    )
-    if response.status_code == 200:
-        assistant_answer = response.json()['choices'][0]['text']
-        st.write(f"Assistant: {assistant_answer}")
-    else:
-        st.error(f"Error: {response.text}")
+st.markdown("""
+**Name**: Prathap  
+**About**: A student passionate about **data science**, **machine learning**, and **artificial intelligence**. Always eager to learn new technologies and apply them to real-world problems.  
+**Contact**: [prathapy150@gmail.com](mailto:prathapy150@gmail.com)
+
+#### 🌍 Social Links:
+- [LinkedIn](https://www.linkedin.com/in/prathap-r-2192442a3/)  
+- [GitHub](https://github.com/prathapprr)  
+- [Instagram](https://www.instagram.com/prathap_prr/)  <!-- Replace with your personal website URL -->
+
+#### 💬 Personal Vision:
+*"I believe in using technology to solve meaningful problems. Every challenge is an opportunity to learn and grow."*
+
+#### 🌱 Let's Connect:
+Feel free to reach out to me for collaboration opportunities, ideas, or just a casual conversation about AI and technology.
+""", unsafe_allow_html=True)
+
+
