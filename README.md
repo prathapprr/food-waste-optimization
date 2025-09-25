@@ -3,7 +3,7 @@
 
 This repository contains a machine learning project aimed at analyzing and predicting food wastage trends. By leveraging exploratory data analysis (EDA) and predictive modeling, the project seeks to optimize food usage and reduce wastage.
 
-## Directory Structures 
+## Directory Structure
 
 ```
 prathapprr-food-waste-optimization/
